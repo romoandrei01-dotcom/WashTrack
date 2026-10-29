@@ -1,98 +1,58 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { router } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
+import { AppButton } from "../components/AppButton";
+import { colors } from "../constants/theme";
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function Welcome() {
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+    <View style={css.container}>
+      <View style={css.logo}>
+        <Text style={css.logoText}>W</Text>
+      </View>
+
+      <Text style={css.title}>WashTrack</Text>
+      <Text style={css.subtitle}>Laundry Management System</Text>
+
+      <Text style={css.description}>
+        Manage customers, laundry orders, payments,
+        and daily laundry operations in one place.
+      </Text>
+
+      <View style={{ width: 240 }}>
+        <AppButton
+          title="Get Started"
+          onPress={() => router.push("/login")}
+        />
+        <AppButton
+          title="Track My Laundry"
+          secondary
+          onPress={() => router.push("/track")}
+        />
+      </View>
+
+      <Text style={css.footer}>Group 6 • Software Engineering</Text>
+    </View>
   );
 }
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
-}
-
-const styles = StyleSheet.create({
+const css = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    flex: 1, backgroundColor: colors.background,
+    alignItems: "center", justifyContent: "center", padding: 24
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+  logo: {
+    width: 90, height: 90, borderRadius: 24,
+    backgroundColor: colors.primary,
+    alignItems: "center", justifyContent: "center",
+    marginBottom: 24
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+  logoText: { color: "white", fontSize: 46, fontWeight: "bold" },
+  title: { fontSize: 38, fontWeight: "bold", color: colors.dark },
+  subtitle: { fontSize: 19, color: colors.primary, marginTop: 8 },
+  description: {
+    color: colors.muted, textAlign: "center",
+    maxWidth: 380, lineHeight: 24, marginVertical: 28
   },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
+  footer: { position: "absolute", bottom: 25, color: colors.muted }
 });

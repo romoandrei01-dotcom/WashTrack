@@ -1,65 +1,67 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
 
-import '@/global.css';
+export const colors = {
+  primary: "#2563EB",
+  dark: "#163B67",
+  background: "#F3F7FC",
+  surface: "#FFFFFF",
+  text: "#172B4D",
+  muted: "#64748B",
+  border: "#E2E8F0",
+  success: "#15803D",
+  warning: "#D97706",
+  danger: "#DC2626",
+};
 
-import { Platform } from 'react-native';
-
-export const Colors = {
-  light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
+export const styles = {
+  page: {
+    flex: 1,
+    backgroundColor: colors.background,
   },
-  dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+  content: {
+    width: "100%" as const,
+    maxWidth: 1000,
+    alignSelf: "center" as const,
+    padding: 20,
+    paddingBottom: 50,
   },
-} as const;
-
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
-
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
+  card: {
+    backgroundColor: colors.surface,
+    borderRadius: 14,
+    padding: 20,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
+  input: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 9,
+    padding: 13,
+    marginVertical: 7,
+    fontSize: 15,
   },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
+  title: {
+    fontSize: 26,
+    fontWeight: "700" as const,
+    color: colors.text,
+    marginBottom: 12,
   },
-});
+  label: {
+    fontSize: 14,
+    fontWeight: "600" as const,
+    color: colors.text,
+    marginTop: 10,
+  },
+  muted: {
+    color: colors.muted,
+    fontSize: 14,
+  },
+};
 
-export const Spacing = {
-  half: 2,
-  one: 4,
-  two: 8,
-  three: 16,
-  four: 24,
-  five: 32,
-  six: 64,
-} as const;
-
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
-export const MaxContentWidth = 800;
+export function peso(value: number) {
+  return "₱" + Number(value).toLocaleString("en-PH", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
